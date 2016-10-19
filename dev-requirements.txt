@@ -1,0 +1,5 @@
+check-manifest
+coverage
+pep8
+pyflakes
+pylint

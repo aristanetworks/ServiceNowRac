@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2015, Arista Networks, Inc.
+# Copyright (c) 2016, Arista Networks, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,9 +32,9 @@
 
 import json
 import logging
-import requests
 
 from logging.handlers import SysLogHandler
+from .snow_session import SnowSession
 
 # XXX
 # 1) Need to create well defined errors that the caller can handle
@@ -43,12 +43,12 @@ class SnowClient(object):
     ''' Use this class to create a persistent connection to a ServiceNow
         instance.
     '''
-
+    # pylint: disable=R0913
     def __init__(self, hostname, username, password, timeout=60, api='JSONv2'):
-        self.timeout = timeout # XXX timeout is not used yet
+        self.timeout = timeout
         self.api = api
         self.instance = 'https://%s.service-now.com/' % hostname
-        self.session = requests.Session()
+        self.session = SnowSession()
         self.session.auth = (username, password)
 
         # Enables sending logging messages to the local syslog server.
@@ -67,7 +67,7 @@ class SnowClient(object):
         # Set proper headers
         headers = {'Accept': 'application/json'}
 
-        response = self.session.get(url, headers=headers)
+        response = self.session.get(url, headers=headers, timeout=self.timeout)
 
         if not response.ok:
             self.log.error('get: Request Error: Request response is not Json')
@@ -75,7 +75,7 @@ class SnowClient(object):
 
         response = response.json()
         if 'error' in response:
-            self.log.error('get: Request Error: %s' % response['error'])
+            self.log.error('get: Request Error: %s', response['error'])
             return None
         else:
             if 'records' in response:
@@ -103,11 +103,11 @@ class SnowClient(object):
             # return None, otherwise return all the records
             for record in response['records']:
                 if '__error' in record:
-                    self.log.error('Record Error: %s' %
+                    self.log.error('Record Error: %s',
                                    record['__error']['message'])
                     return None
             return response['records']
         else:
             if 'error' in response:
-                self.log.error('post: Request Error: %s' % response['error'])
+                self.log.error('post: Request Error: %s', response['error'])
             return None

@@ -47,13 +47,12 @@ import logging
 
 from requests import Session
 from requests.exceptions import ConnectionError, HTTPError, Timeout
-from logging.handlers import SysLogHandler
 
 class SnowSession(Session):
-    ''' TODO
+    ''' SnowSession provides a session that reconnects on select errors.
     '''
     MAX_RETRIES = 3
-    MAX_RETRY_DELAY = 3
+    RETRY_DELAY = 3
     RETRY_BACKOFF = 2
 
     def __init__(self):
@@ -67,11 +66,21 @@ class SnowSession(Session):
         self.log = logging.getLogger(__name__)
 
     def _make_request(self, req_type, url, **kwargs):
-        ''' XXX
+        ''' _make_request wrapper function used to perform
+            a GET/PUT/POST/DELETE/etc request and handle select
+            retryable errors by re-issuing the request MAX_RETRIES
+            times using backoff
+            Parameters:
+                req_type: request type (get, put, post, etc..)
+                url: URL for the request
+                **kwargs: Optional arguments that ``request`` takes.
+
+            Returns
+                `requests.Response <Response>` object
         '''
         method = getattr(super(SnowSession, self), req_type.lower())
 
-        max_retries, max_delay = self.MAX_RETRIES, self.MAX_RETRY_DELAY
+        max_retries, max_delay = self.MAX_RETRIES, self.RETRY_DELAY
         retry_num = 0
         while retry_num < max_retries:
             try:
@@ -90,7 +99,6 @@ class SnowSession(Session):
                 self.log.error('%s: Request Error: %s...retry %d', req_type,
                                error, retry_num)
                 exeception = error
-
 
             retry_num += 1
             self.log.error('%s: Request %d - backoff for %d sec', req_type,

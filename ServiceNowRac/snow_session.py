@@ -46,7 +46,10 @@ import time
 import logging
 
 from requests import Session
-from requests.exceptions import ConnectionError, HTTPError, Timeout
+from requests.exceptions import RequestException, ConnectionError, HTTPError, Timeout
+
+class MaxRetryError(RequestException):
+    '''An Max Retry error occurred.'''
 
 class SnowSession(Session):
     ''' SnowSession provides a session that reconnects on select errors.
@@ -78,11 +81,13 @@ class SnowSession(Session):
             Returns
                 `requests.Response <Response>` object
         '''
+        exception = None
         method = getattr(super(SnowSession, self), req_type.lower())
 
         max_retries, max_delay = self.MAX_RETRIES, self.RETRY_DELAY
         retry_num = 0
         while retry_num < max_retries:
+            retry_num += 1
             try:
                 response = method(url, **kwargs)
                 response.raise_for_status()
@@ -92,23 +97,29 @@ class SnowSession(Session):
                 if error.response.status_code in [502, 503, 504]:
                     self.log.error('%s: Request Error: %s...retry %d',
                                    req_type, error, retry_num)
-                    exeception = error
+                    exception = error
                 else:
                     raise error
             except (Timeout, ConnectionError) as error:
                 self.log.error('%s: Request Error: %s...retry %d', req_type,
                                error, retry_num)
-                exeception = error
+                exception = error
+            except:
+                raise
 
-            retry_num += 1
             self.log.error('%s: Request %d - backoff for %d sec', req_type,
                            retry_num, max_delay)
             time.sleep(max_delay)
             max_delay *= self.RETRY_BACKOFF
 
-        if exeception is not None:
-            raise exeception
-        return response
+        msg = "%s: Max Retries(%d) exceeded." % (req_type, self.MAX_RETRIES)
+        if exception is not None:
+            msg += ' %s' % exception
+        else:
+            msg += ' Http status code: %s' % response.status_code
+
+        self.log.error(msg)
+        raise MaxRetryError(msg)
 
     def head(self, url, **kwargs):
         ''' Over-ride the head() method

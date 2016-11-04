@@ -36,13 +36,9 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../lib'))
 import unittest
 
-from ServiceNowRac.snow_client import SnowClient
+from config import CONFIG
 
-CONFIG = {
-    'host': 'ven01082',
-    'user': 'admin',
-    'passwd': 'AristaInnovates'
-}
+from ServiceNowRac.snow_client import SnowClient
 
 class TestSnowClient(unittest.TestCase):
     ''' Tests the ServiceNow Client using the common 'incident' table

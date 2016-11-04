@@ -73,7 +73,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(http_return_404):
             self.assertRaises(HTTPError, self.table.get, sysid)
 
-    def test_01_get_empty_record_return(self):
+    def test_02_get_empty_record_return(self):
         ''' Test 'get' with 404 return
         '''
         sysid = '9c573169c611228700193229fff72400'
@@ -82,7 +82,7 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(resp, None)
 
-    def test_02_get_keys(self):
+    def test_03_get_keys(self):
         ''' Verify 'get_keys' functionality
         '''
         with HTTMock(snow_table_getkeys):
@@ -90,7 +90,7 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(len(data), 50)
 
-    def test_03_get_records(self):
+    def test_04_get_records(self):
         ''' Verify 'get_records' functionality
         '''
         with HTTMock(snow_table_getrecords):
@@ -98,7 +98,7 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(len(data), 52)
 
-    def test_04_insert(self):
+    def test_05_insert(self):
         ''' Verify 'insert' functionality
         '''
         data = {
@@ -115,14 +115,14 @@ class TestSnowTable(unittest.TestCase):
         self.assertEquals(resp['short_description'], 'Test generate Incident')
 
     @unittest.skip("Skipping insert_multiple")
-    def test_05_insert_multiple(self):
+    def test_06_insert_multiple(self):
         ''' Verify 'insert_multiple' functionality
         '''
         # { "records" : [ { ... }, { ... } ] }
         # with HTTMock(snow_table_insert_multiple):
         #       data = self.table.insert_multiple(data)
 
-    def test_06_update(self):
+    def test_07_update(self):
         ''' Verify 'update' functionality
         '''
         data = {
@@ -136,7 +136,7 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(resp['comments'], '')
 
-    def test_07_delete(self):
+    def test_08_delete(self):
         ''' Verify 'delete' functionality
         '''
         with HTTMock(snow_table_delete):
@@ -146,7 +146,7 @@ class TestSnowTable(unittest.TestCase):
         self.assertEquals(data['sys_id'], 'aad67f9613b22200a57c70a76144b0ee')
 
     @unittest.skip("Skipping delete_multiple")
-    def test_08_delete_multiple(self):
+    def test_09_delete_multiple(self):
         ''' Verify 'delete_multiple' functionality
         '''
         with HTTMock(snow_table_delete_multiple):

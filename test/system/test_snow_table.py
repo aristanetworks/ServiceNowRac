@@ -39,11 +39,7 @@ import unittest
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
-CONFIG = {
-    'host': 'ven01082',
-    'user': 'admin',
-    'passwd': 'AristaInnovates'
-}
+from config import CONFIG
 
 # pylint: disable=invalid-name
 sys_id = None

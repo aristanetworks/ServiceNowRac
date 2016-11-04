@@ -8,6 +8,8 @@
 3. [Getting Started] (#getting-started)
     * [Example] (#example)
 4. [Testing] (#testing)
+    * [Unit Test] (#unit-tests)
+    * [System Test] (#system-tests)
 5. [License] (#license)
 
 # Overview
@@ -77,7 +79,25 @@ print records[0]
 
 # Testing
 
-XXX None yet
+Both system and unit tests are provided.
+
+## Unit Tests
+
+Unit tests can be executed via:
+
+```sh
+$ make unittest
+```
+
+## System Tests
+
+In order for system tests to be run, a valid ServiceNow instance along with login 
+credentials is needed and test/system/config.py should be updated with instance/login. 
+Once updated, system tests can be run by issuing:   
+
+```sh
+make systest
+```
 
 # License
 

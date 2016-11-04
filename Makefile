@@ -30,7 +30,7 @@ RPMSPEC = $(RPMSPECDIR)/ServiceNowRac.spec
 RPMRELEASE = 1
 RPMNVR = "$(NAME)-$(VERSION)-$(RPMRELEASE)"
 
-PEP8_IGNORE = E302,E203,E261
+PEP8_IGNORE = E302,E203,E261,E402
 ########################################################
 
 all: clean check pep8 pyflakes pylint tests coverage_report
@@ -60,8 +60,13 @@ pylint:
 	find ./ServiceNowRac -name \*.py | xargs pylint --rcfile .pylintrc
 	find ./test -name \*.py | xargs pylint --rcfile .pylintrc
 
-tests: clean
-	$(COVERAGE) run --source $(NAME) -m unittest discover test -v
+unittest: clean
+	$(COVERAGE) run --source $(NAME) -m unittest discover test/unit -v
+
+systest: clean
+	$(COVERAGE) run --source $(NAME) -m unittest discover test/system -v
+
+tests: unittest systest
 
 rpmcommon: sdist
 	@mkdir -p rpmbuild

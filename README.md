@@ -96,7 +96,7 @@ credentials is needed and test/system/config.py should be updated with instance/
 Once updated, system tests can be run by issuing:   
 
 ```sh
-make systest
+$ make systest
 ```
 
 # License

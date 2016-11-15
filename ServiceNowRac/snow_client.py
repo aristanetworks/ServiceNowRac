@@ -67,7 +67,7 @@ class SnowClient(object):
         # Set proper headers
         headers = {'Accept': 'application/json'}
 
-        response = self.session.get(url, headers=headers)
+        response = self.session.get(url, headers=headers, timeout=self.timeout)
 
         try:
             response = response.json()
@@ -91,7 +91,8 @@ class SnowClient(object):
         '''
         url = '%s%s.do?%s&%s' % (self.instance, table, self.api, sysparm)
 
-        response = self.session.post(url, data=json.dumps(data))
+        response = self.session.post(url, data=json.dumps(data),
+                                     timeout=self.timeout)
 
         try:
             response = response.json()

@@ -69,11 +69,12 @@ class SnowClient(object):
 
         response = self.session.get(url, headers=headers, timeout=self.timeout)
 
-        if not response.ok:
+        try:
+            response = response.json()
+        except ValueError:
             self.log.error('get: Request Error: Request response is not Json')
             return None
 
-        response = response.json()
         if 'error' in response:
             self.log.error('get: Request Error: %s', response['error'])
             return None
@@ -90,14 +91,16 @@ class SnowClient(object):
         '''
         url = '%s%s.do?%s&%s' % (self.instance, table, self.api, sysparm)
 
-        response = self.session.post(url, data=json.dumps(data))
+        response = self.session.post(url, data=json.dumps(data),
+                                     timeout=self.timeout)
 
-        if not response.ok:
+        try:
+            response = response.json()
+        except ValueError:
             self.log.error('post: Request Error: Request response is not Json')
             return None
 
-        response = response.json()
-        if len(response['records']):
+        if 'records' in response:
             # Check every record returned to see if there is an error
             # message in the record. If one record has an error then
             # return None, otherwise return all the records

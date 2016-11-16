@@ -36,6 +36,8 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../lib'))
 import unittest
 
+from testlib import random_string
+
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
@@ -128,17 +130,21 @@ class TestSnowTable(unittest.TestCase):
         resp = self.table.get(sys_id)
         self.assertEquals(resp, None)
 
-    def test_07_insert_multiple(self):
-        ''' Verify 'insert_multiple' functionality
+    def test_08_insert_delete_multiple(self):
+        ''' Verify 'insert_multiple' and 'delete_multiple' functionality
         '''
-        # { "records" : [ { ... }, { ... } ] }
-        #       data = self.table.insert_multiple(data)
+        create_num = 5
+        data = []
+        for _ in range(create_num):
+            description = 'Systest Generated: %s' % random_string(5, 10)
+            data.append({'short_description': description})
 
-    def test_08_delete_multiple(self):
-        ''' Verify 'delete_multiple' functionality
-        '''
-        # data = self.table.delete_multiple('name=Arista Networks')
-        # self.assertEquals(len(data), 52)
+        resp = self.table.insert_multiple(data)
+        self.assertEquals(len(resp), create_num)
+
+        query_str = 'short_descriptionSTARTSWITHSystest Generated:'
+        resp = self.table.delete_multiple(query_str)
+        self.assertEquals(resp[0]['count'], create_num)
 
 if __name__ == '__main__':
     unittest.main()

@@ -156,7 +156,7 @@ def snow_table_insert(url, request):
 def snow_table_insert_multiple(url, request):
     ''' Mock POST insert multiple request response
     '''
-    content_json = get_fixture_data('incident_table_insert.json')
+    content_json = get_fixture_data('incident_table_insert_multiple.json')
     return response(200, content_json, HEADERS, None, 5, request)
 
 @urlmatch(scheme='https', netloc=NETLOC, path='/incident.do', query='JSONv2',
@@ -192,5 +192,5 @@ def snow_table_delete(url, request):
 def snow_table_delete_multiple(url, request):
     ''' Mock POST delete multiple request response
     '''
-    content_json = get_fixture_data('incident_table_delete_multiple.json')
+    content_json = json.dumps({"records" : [{"count" : 5}]})
     return response(200, content_json, HEADERS, None, 5, request)

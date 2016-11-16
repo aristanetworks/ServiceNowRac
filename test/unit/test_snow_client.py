@@ -31,9 +31,6 @@
 
 ''' Unit Tests for SnowClient
 '''
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '../lib'))
 import unittest
 
 from requests.exceptions import HTTPError, TooManyRedirects
@@ -44,11 +41,10 @@ from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_session import MaxRetryError
 
 from mock_defs import http_return_302, http_return_404, http_return_502, \
-                      http_timeout_error, http_connection_error, \
-                      snow_table_getkeys, snow_request_json_no_record, \
-                      snow_post_json_valid, snow_post_json_no_payload, \
-                      snow_invalid_sysparm_action, snow_invalid_insert, \
-                      snow_bad_json_return, http_too_many_redirects
+    http_timeout_error, http_connection_error, snow_table_getkeys, \
+    snow_request_json_no_record, snow_post_json_valid, \
+    snow_post_json_no_payload, snow_invalid_sysparm_action, \
+    snow_invalid_insert, snow_bad_json_return, http_too_many_redirects
 
 class TestSnowClient(unittest.TestCase):
     ''' Tests the ServiceNow Client using Mock tests
@@ -80,22 +76,22 @@ class TestSnowClient(unittest.TestCase):
         ''' Verify 'get' handing of HTTP404
         '''
         with HTTMock(http_return_404):
-            self.assertRaises(HTTPError,
-                              self.client.get, 'incident', 'sysparm_action=getKeys')
+            self.assertRaises(HTTPError, self.client.get, 'incident',
+                              'sysparm_action=getKeys')
 
     def test_03_get_502(self):
         ''' Verify 'get' handing of HTTP404
         '''
         with HTTMock(http_return_502):
-            self.assertRaises(MaxRetryError,
-                              self.client.get, 'incident', 'sysparm_action=getKeys')
+            self.assertRaises(MaxRetryError, self.client.get, 'incident',
+                              'sysparm_action=getKeys')
 
     def test_04_get_too_many_redirects(self):
         ''' Verify 'get' handing of TooManyRedirects
         '''
         with HTTMock(http_too_many_redirects):
-            self.assertRaises(TooManyRedirects,
-                              self.client.get, 'incident', 'sysparm_action=getKeys')
+            self.assertRaises(TooManyRedirects, self.client.get, 'incident',
+                              'sysparm_action=getKeys')
 
     def test_05_get_json_ret_error(self):
         ''' Verify 'get' handling of error status in json

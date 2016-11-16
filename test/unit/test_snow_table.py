@@ -31,9 +31,6 @@
 
 ''' Unit Tests for Table api
 '''
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '../lib'))
 import unittest
 
 from requests.exceptions import HTTPError
@@ -43,10 +40,10 @@ from httmock import HTTMock
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
-from mock_defs import snow_table_get, http_return_404, \
-                      snow_table_getkeys, snow_table_getrecords, \
-                      snow_table_insert, snow_table_update, snow_table_delete, \
-                      snow_table_delete_multiple, snow_empty_record_list
+from mock_defs import snow_table_get, http_return_404, snow_table_getkeys, \
+    snow_table_getrecords, snow_table_insert, snow_table_update, \
+    snow_table_delete, snow_table_delete_multiple, snow_empty_record_list, \
+    snow_table_insert_multiple
 
 class TestSnowTable(unittest.TestCase):
     ''' Tests the ServiceNow table api using Mock tests
@@ -114,15 +111,32 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(resp['short_description'], 'Test generate Incident')
 
-    @unittest.skip("Skipping insert_multiple")
-    def test_06_insert_multiple(self):
+    def test_06_insert_invalid_type(self):
+        ''' Verify 'insert_multiple' fails on non-list arg
+        '''
+        data = dict()
+        with self.assertRaises(TypeError):
+            self.table.insert_multiple(data)
+        data = str("some data")
+        with self.assertRaises(TypeError):
+            self.table.insert_multiple(data)
+        data = int()
+        with self.assertRaises(TypeError):
+            self.table.insert_multiple(data)
+
+    def test_07_insert_multiple(self):
         ''' Verify 'insert_multiple' functionality
         '''
-        # { "records" : [ { ... }, { ... } ] }
-        # with HTTMock(snow_table_insert_multiple):
-        #       data = self.table.insert_multiple(data)
+        data = []
+        for i in range(5):
+            description = 'Systest Generated: Test %d' % i
+            data.append({'short_description': description})
 
-    def test_07_update(self):
+        with HTTMock(snow_table_insert_multiple):
+            resp = self.table.insert_multiple(data)
+        self.assertEquals(len(resp), 5)
+
+    def test_08_update(self):
         ''' Verify 'update' functionality
         '''
         data = {
@@ -136,7 +150,7 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(resp['comments'], '')
 
-    def test_08_delete(self):
+    def test_09_delete(self):
         ''' Verify 'delete' functionality
         '''
         with HTTMock(snow_table_delete):
@@ -145,14 +159,14 @@ class TestSnowTable(unittest.TestCase):
 
         self.assertEquals(data['sys_id'], 'aad67f9613b22200a57c70a76144b0ee')
 
-    @unittest.skip("Skipping delete_multiple")
-    def test_09_delete_multiple(self):
+    def test_10_delete_multiple(self):
         ''' Verify 'delete_multiple' functionality
         '''
         with HTTMock(snow_table_delete_multiple):
-            data = self.table.delete_multiple('name=Arista Networks')
+            resp = self.table.delete_multiple(
+                'short_descriptionSTARTSWITHSystest Generated')
 
-        self.assertEquals(len(data), 52)
+        self.assertEquals(resp[0]['count'], 5)
 
 if __name__ == '__main__':
     unittest.main()

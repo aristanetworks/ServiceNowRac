@@ -3,6 +3,6 @@ include Makefile
 include *.spec
 include *.txt
 include LICENSE
-include VERSION
 recursive-include test *.py
 recursive-include test *.yaml
+recursive-include test *.json

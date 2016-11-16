@@ -46,7 +46,8 @@ import time
 import logging
 
 from requests import Session
-from requests.exceptions import RequestException, ConnectionError, HTTPError, Timeout
+from requests.exceptions import RequestException, ConnectionError, HTTPError, \
+    Timeout
 
 class MaxRetryError(RequestException):
     '''An Max Retry error occurred.'''

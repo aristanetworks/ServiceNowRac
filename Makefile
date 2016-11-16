@@ -33,7 +33,7 @@ RPMNVR = "$(NAME)-$(VERSION)-$(RPMRELEASE)"
 PEP8_IGNORE = E302,E203,E261,E402
 ########################################################
 
-all: clean check pep8 pyflakes pylint tests coverage_report
+all: clean check pep8 pyflakes pylint unittest coverage_report systest
 
 check:
 	check-manifest

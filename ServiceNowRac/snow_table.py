@@ -74,12 +74,16 @@ class SnowTable(object):
         return self.conn.post(self.table, sysparm, data)
 
     def insert_multiple(self, data):
-        ''' Create multiple new records.
+        ''' Create multiple new records. Format of payload should model
+            { "records" : [ { ... }, { ... } ] }
         '''
-        # XXX This won't work. Need:
-        # { "records" : [ { ... }, { ... } ] }
+        if not isinstance(data, list):
+            raise TypeError('Invalid type. insert_multiple requires list of '
+                            'records.')
+
         sysparm = 'sysparm_action=insertMultiple'
-        return self.conn.post(self.table, sysparm, data)
+        records = {'records': data}
+        return self.conn.post(self.table, sysparm, records)
 
     def update(self, data, query):
         ''' Update existing records filtered by the encoded query string.

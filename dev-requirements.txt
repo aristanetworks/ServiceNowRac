@@ -1,5 +1,6 @@
 check-manifest
 coverage
+httmock
 pep8
 pyflakes
 pylint

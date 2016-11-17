@@ -40,10 +40,10 @@ from httmock import HTTMock
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
-from .mock_defs import snow_table_get, http_return_404, snow_table_getkeys, \
-    snow_table_getrecords, snow_table_insert, snow_table_update, \
-    snow_table_delete, snow_table_delete_multiple, snow_empty_record_list, \
-    snow_table_insert_multiple
+from test.unit.mock_defs import snow_table_get, http_return_404, \
+    snow_table_getkeys, snow_table_getrecords, snow_table_insert, \
+    snow_table_update, snow_table_delete, snow_table_delete_multiple, \
+    snow_empty_record_list, snow_table_insert_multiple
 
 class TestSnowTable(unittest.TestCase):
     ''' Tests the ServiceNow table api using Mock tests

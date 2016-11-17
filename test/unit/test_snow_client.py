@@ -40,9 +40,9 @@ from httmock import HTTMock
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_session import MaxRetryError
 
-from .mock_defs import http_return_302, http_return_404, http_return_502, \
-    http_timeout_error, http_connection_error, snow_table_getkeys, \
-    snow_request_json_no_record, snow_post_json_valid, \
+from test.unit.mock_defs import http_return_302, http_return_404, \
+    http_return_502, http_timeout_error, http_connection_error, \
+    snow_table_getkeys, snow_request_json_no_record, snow_post_json_valid, \
     snow_post_json_no_payload, snow_invalid_sysparm_action, \
     snow_invalid_insert, snow_bad_json_return, http_too_many_redirects
 

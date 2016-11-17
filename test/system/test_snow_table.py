@@ -42,7 +42,7 @@ from testlib import random_string
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
-from config import CONFIG
+from .config import CONFIG
 
 # pylint: disable=invalid-name
 sys_id = None

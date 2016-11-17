@@ -33,7 +33,7 @@
 '''
 import unittest
 
-from config import CONFIG
+from .config import CONFIG
 
 from ServiceNowRac.snow_client import SnowClient
 

@@ -1,4 +1,5 @@
 # pylint: disable=unused-argument
+# pylint: disable=wrong-import-position
 #
 # Copyright (c) 2016, Arista Networks, Inc.
 # All rights reserved.
@@ -42,9 +43,8 @@ from httmock import response, urlmatch
 
 from testlib import get_fixture_data
 
-NETLOC = r'ServiceNowInstance.service-now.com'
+NETLOC = r'servicenow-instance.service-now.com'
 HEADERS = {'content-type': 'application/json'}
-
 
 @urlmatch(scheme='https', netloc=NETLOC, path='/incident.do')
 def http_return_302(url, request):

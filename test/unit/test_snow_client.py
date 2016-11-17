@@ -40,7 +40,7 @@ from httmock import HTTMock
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_session import MaxRetryError
 
-from mock_defs import http_return_302, http_return_404, http_return_502, \
+from .mock_defs import http_return_302, http_return_404, http_return_502, \
     http_timeout_error, http_connection_error, snow_table_getkeys, \
     snow_request_json_no_record, snow_post_json_valid, \
     snow_post_json_no_payload, snow_invalid_sysparm_action, \
@@ -63,7 +63,7 @@ class TestSnowClient(unittest.TestCase):
     ''' Tests the ServiceNow Client using Mock tests
     '''
     def setUp(self):
-        self.client = SnowClient('ServiceNowInstance',
+        self.client = SnowClient('servicenow-instance',
                                  'admin',
                                  'admin')
 
@@ -77,7 +77,7 @@ class TestSnowClient(unittest.TestCase):
     def test_01_get_302(self):
         ''' Verify 'get' handling of HTTP302 with retry
         '''
-        client = SnowClient('ServiceNowInstance',
+        client = SnowClient('servicenow-instance',
                             'admin',
                             'admin', api='')
 
@@ -162,7 +162,7 @@ class TestSnowClient(unittest.TestCase):
     def test_12_post_302(self):
         ''' Verify 'post' handing of HTTP302
         '''
-        client = SnowClient('ServiceNowInstance',
+        client = SnowClient('servicenow-instance',
                             'admin',
                             'admin', api='')
 

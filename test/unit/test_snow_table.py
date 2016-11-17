@@ -40,7 +40,7 @@ from httmock import HTTMock
 from ServiceNowRac.snow_client import SnowClient
 from ServiceNowRac.snow_table import SnowTable
 
-from mock_defs import snow_table_get, http_return_404, snow_table_getkeys, \
+from .mock_defs import snow_table_get, http_return_404, snow_table_getkeys, \
     snow_table_getrecords, snow_table_insert, snow_table_update, \
     snow_table_delete, snow_table_delete_multiple, snow_empty_record_list, \
     snow_table_insert_multiple
@@ -49,7 +49,7 @@ class TestSnowTable(unittest.TestCase):
     ''' Tests the ServiceNow table api using Mock tests
     '''
     def setUp(self):
-        client = SnowClient('ServiceNowInstance',
+        client = SnowClient('servicenow-instance',
                             'admin',
                             'admin')
         self.table = SnowTable('incident', client)
@@ -114,15 +114,12 @@ class TestSnowTable(unittest.TestCase):
     def test_06_insert_invalid_type(self):
         ''' Verify 'insert_multiple' fails on non-list arg
         '''
-        data = dict()
         with self.assertRaises(TypeError):
-            self.table.insert_multiple(data)
-        data = str("some data")
+            self.table.insert_multiple(dict())
         with self.assertRaises(TypeError):
-            self.table.insert_multiple(data)
-        data = int()
+            self.table.insert_multiple(str())
         with self.assertRaises(TypeError):
-            self.table.insert_multiple(data)
+            self.table.insert_multiple(int())
 
     def test_07_insert_multiple(self):
         ''' Verify 'insert_multiple' functionality

@@ -29,6 +29,12 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+''' ServiceNow Client
+
+This module provides the client for ServiceNow actions. It provides
+the underlying reliable connection and defines the get and post methods
+for interacting with ServiceNow REST API.
+'''
 
 import json
 import logging

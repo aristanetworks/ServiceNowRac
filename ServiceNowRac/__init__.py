@@ -29,6 +29,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
+''' ServiceNow RESTful API Client
+'''
 __version__ = '0.5.0'
 __author__ = 'Arista Networks, Inc.'

@@ -29,6 +29,9 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+''' ServiceNow Table API
+    Class containing ServiceNow Table API calls
+'''
 
 class SnowTable(object):
     ''' Use this class to perform operations on existing tables.

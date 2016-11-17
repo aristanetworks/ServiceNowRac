@@ -28,7 +28,7 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+#
 ''' Unit Tests for SnowClient
 '''
 import unittest
@@ -45,6 +45,19 @@ from mock_defs import http_return_302, http_return_404, http_return_502, \
     snow_request_json_no_record, snow_post_json_valid, \
     snow_post_json_no_payload, snow_invalid_sysparm_action, \
     snow_invalid_insert, snow_bad_json_return, http_too_many_redirects
+
+
+DATA = {
+    'category'           : 'Request',
+    'comments'           : 'Test Comments',
+    'description'        : 'Test generate Incident',
+    'impact'             : '3',
+    'priority'           : '3',
+    'short_description'  : 'Test generate Incident',
+    'reason'             : 'Network Requirements',
+    'state'              : 'New',
+    'type'               : 'Routine',
+}
 
 class TestSnowClient(unittest.TestCase):
     ''' Tests the ServiceNow Client using Mock tests
@@ -133,19 +146,8 @@ class TestSnowClient(unittest.TestCase):
     def test_10_post_valid_data(self):
         ''' Verify 'post' handling of valid insert
         '''
-        data = {
-            'category'           : 'Request',
-            'comments'           : 'Test Comments',
-            'description'        : 'Test generate Incident',
-            'impact'             : '3',
-            'priority'           : '3',
-            'reason'             : 'Network Requirements',
-            'short_description'  : 'Test generate Incident',
-            'state'              : 'New',
-            'type'               : 'Routine',
-        }
         with HTTMock(snow_post_json_valid):
-            resp = self.client.post('incident', 'sysparm_action=insert', data)
+            resp = self.client.post('incident', 'sysparm_action=insert', DATA)
         self.assertNotEquals(resp, None)
 
     def test_11_post_no_payload(self):
@@ -163,41 +165,18 @@ class TestSnowClient(unittest.TestCase):
         client = SnowClient('ServiceNowInstance',
                             'admin',
                             'admin', api='')
-        data = {
-            'category'           : 'Request',
-            'comments'           : 'Test Comments',
-            'description'        : 'Test generate Incident',
-            'impact'             : '3',
-            'priority'           : '3',
-            'reason'             : 'Network Requirements',
-            'short_description'  : 'Test generate Incident',
-            'state'              : 'New',
-            'type'               : 'Routine',
-        }
 
         with HTTMock(http_return_302):
             with self.assertRaises(MaxRetryError):
-                client.post('incident', 'sysparm_action=insert', data)
+                client.post('incident', 'sysparm_action=insert', DATA)
 
     def test_13_post_404(self):
         ''' Verify 'post' handing of HTTP404
         '''
-        data = {
-            'category'           : 'Request',
-            'comments'           : 'Test Comments',
-            'description'        : 'Test generate Incident',
-            'impact'             : '3',
-            'priority'           : '3',
-            'reason'             : 'Network Requirements',
-            'short_description'  : 'Test generate Incident',
-            'state'              : 'New',
-            'type'               : 'Routine',
-        }
-
         with HTTMock(http_return_404):
             self.assertRaises(HTTPError,
                               self.client.post, 'incident',
-                              'sysparm_action=insert', data)
+                              'sysparm_action=insert', DATA)
 
     def test_14_post_json_ret_error(self):
         ''' Verify 'post' handling of error status in json
@@ -231,40 +210,18 @@ class TestSnowClient(unittest.TestCase):
     def test_17_post_timeout(self):
         ''' Verify 'post' handling of Timeout
         '''
-        data = {
-            'category'           : 'Request',
-            'comments'           : 'Test Comments',
-            'description'        : 'Test generate Incident',
-            'impact'             : '3',
-            'priority'           : '3',
-            'reason'             : 'Network Requirements',
-            'short_description'  : 'Test generate Incident',
-            'state'              : 'New',
-            'type'               : 'Routine',
-        }
         with HTTMock(http_timeout_error):
             self.assertRaises(MaxRetryError,
                               self.client.post, 'incident',
-                              'sysparm_action=insert', data)
+                              'sysparm_action=insert', DATA)
 
     def test_18_post_connection_error(self):
         ''' Verify 'post' handling of ConnectionError
         '''
-        data = {
-            'category'           : 'Request',
-            'comments'           : 'Test Comments',
-            'description'        : 'Test generate Incident',
-            'impact'             : '3',
-            'priority'           : '3',
-            'reason'             : 'Network Requirements',
-            'short_description'  : 'Test generate Incident',
-            'state'              : 'New',
-            'type'               : 'Routine',
-        }
         with HTTMock(http_connection_error):
             self.assertRaises(MaxRetryError,
                               self.client.post, 'incident',
-                              'sysparm_action=insert', data)
+                              'sysparm_action=insert', DATA)
 
 if __name__ == '__main__':
     unittest.main()

@@ -57,8 +57,7 @@ pyflakes:
 	pyflakes ServiceNowRac/ test/
 
 pylint:
-	find ./ServiceNowRac -name \*.py | xargs pylint --rcfile .pylintrc
-	find ./test -name \*.py | xargs pylint --rcfile .pylintrc
+	find ./ServiceNowRac ./test -name \*.py | xargs pylint --rcfile .pylintrc
 
 unittest: clean
 	$(COVERAGE) run --source $(NAME) -m unittest discover test/unit -v

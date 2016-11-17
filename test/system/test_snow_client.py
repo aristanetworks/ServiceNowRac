@@ -1,3 +1,4 @@
+# pylint: disable=wrong-import-position
 #
 # Copyright (c) 2016, Arista Networks, Inc.
 # All rights reserved.
@@ -33,9 +34,10 @@
 '''
 import unittest
 
+from ServiceNowRac.snow_client import SnowClient
+
 from .config import CONFIG
 
-from ServiceNowRac.snow_client import SnowClient
 
 DATA = {
     'category'           : 'Request',

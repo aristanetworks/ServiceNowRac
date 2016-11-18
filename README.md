@@ -1,4 +1,5 @@
-# Arista ServiceNow REST API Client
+# Arista ServiceNow REST API Client [![Build Status](https://travis-ci.com/aristanetworks/ServiceNowRac.svg?token=5Krshfo4QsdTX49aLCPD&branch=develop)](https://travis-ci.com/aristanetworks/ServiceNowRac) [![codecov](https://codecov.io/gh/aristanetworks/ServiceNowRac/branch/develop/graph/badge.svg?token=YpbBXLe919)](https://codecov.io/gh/aristanetworks/ServiceNowRac)
+
 
 #### Table of Contents
 
@@ -14,7 +15,7 @@
 
 # Overview
 
-The ServiceNowRac package provides a python REST API client for communicating with a ServiceNow instance. 
+The ServiceNowRac package provides a python REST API client for communicating with a ServiceNow instance.
 The package contains the following classes:
 
 * SnowClient - Use this class to create a persistent connection to a ServiceNow instance.
@@ -33,7 +34,7 @@ FOR NOW: To install the python scripts:
 
 * Change directory to the top level directory.
 * make clean
-* python setup.py 
+* python setup.py
 
 # Getting Started
 
@@ -91,9 +92,9 @@ $ make unittest
 
 ## System Tests
 
-In order for system tests to be run, a valid ServiceNow instance along with login 
-credentials is needed and test/system/config.py should be updated with instance/login. 
-Once updated, system tests can be run by issuing:   
+In order for system tests to be run, a valid ServiceNow instance along with login
+credentials is needed and test/system/config.py should be updated with instance/login.
+Once updated, system tests can be run by issuing:
 
 ```sh
 $ make systest

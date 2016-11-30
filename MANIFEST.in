@@ -4,5 +4,4 @@ include *.spec
 include *.txt
 include LICENSE
 recursive-include test *.py
-recursive-include test *.yaml
 recursive-include test *.json

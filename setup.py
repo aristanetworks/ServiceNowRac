@@ -28,8 +28,11 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import os
-from glob import glob
+""" The ServiceNowRac package provides a python REST API client for
+    communicating with a ServiceNow instance.
+"""
+import io
+from os import path, walk
 
 try:
     from setuptools import setup
@@ -39,20 +42,79 @@ except ImportError:
 from ServiceNowRac import __version__, __author__
 
 def find_modules(pkg):
+    ''' Return all modules from the pkg
+    '''
     modules = [pkg]
-    for dirname, dirnames, filenames in os.walk(pkg):
+    for dirname, dirnames, _ in walk(pkg):
         for subdirname in dirnames:
-            modules.append(os.path.join(dirname, subdirname))
+            modules.append(path.join(dirname, subdirname))
     return modules
+
+def get_long_description():
+    ''' Get the long description from README.rst if it exists.
+    '''
+    long_description = ''
+    # Get the long description from the README file
+    here = path.abspath(path.dirname(__file__))
+    try:
+        with io.open(path.join(here, 'README.rst'), encoding='utf-8') as file_hdl:
+            long_description = file_hdl.read()
+    except IOError:
+        pass
+    return long_description
 
 setup(
     name='ServiceNowRac',
     version=__version__,
-    description='ServiceNow Rest API Client written in python',
+    description='ServiceNow Rest API Client written in Python',
+    long_description=get_long_description(),
     author=__author__,
     author_email='eosplus-dev@arista.com',
-    url='https://github.com/arista-eosplus/servicenow',
-    download_url='https://github.com/arista-eosplus/servicenow/tarball/v0.1.0',
+    url='https://github.com/aristanetworks/ServiceNowRac/',
+    download_url='https://github.com/aristanetworks/ServiceNowRac/tarball/%s' % __version__,
     license='BSD-3',
     packages=find_modules('ServiceNowRac'),
+
+    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    classifiers=[
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 3 - Alpha',
+
+        # Indicate who your project is intended for
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: System :: Networking',
+
+        # Pick your license as you wish (should match "license" above)
+        'License :: OSI Approved :: BSD License',
+
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+    ],
+
+    # What does your project relate to?
+    keywords='networking servicenow development rest api',
+
+    # List run-time dependencies here.  These will be installed by pip when
+    # your project is installed. For an analysis of "install_requires" vs pip's
+    # requirements files see:
+    # https://packaging.python.org/en/latest/requirements.html
+    install_requires=['requests'],
+
+    # List additional groups of dependencies here (e.g. development
+    # dependencies). You can install these using the following syntax,
+    # for example:
+    # $ pip install -e .[dev,test]
+    extras_require={
+        'dev': ['check-manifest', 'pep8', 'pyflakes', 'pylint'],
+        'test': ['coverage', 'httmock'],
+    },
 )

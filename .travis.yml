@@ -21,4 +21,4 @@ notifications:
     - cwomble@arista.com
 
 after_success:
-  codecov --token=691a6068-25d6-446b-9d83-56cd56bef568
+  codecov

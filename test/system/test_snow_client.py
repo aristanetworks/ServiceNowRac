@@ -74,7 +74,7 @@ class TestSnowClient(unittest.TestCase):
                                 {'sysparm_sys_id' : sys_id})
         self.assertNotEqual(resp, None)
         self.assertIsInstance(resp, list)
-        self.assertEquals(resp[0]['sys_id'], sys_id)
+        self.assertEqual(resp[0]['sys_id'], sys_id)
         resp = self.client.get('incident', 'sysparm_sys_id=%s' % sys_id)
         self.assertIsInstance(resp, list)
         self.assertEqual(len(resp), 0)
@@ -89,19 +89,19 @@ class TestSnowClient(unittest.TestCase):
 
         resp = client.get('incident', 'sysparm_sys_id='
                           '9c573169c611228700193229fff72400')
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_02_get_json_ret_error(self):
         ''' Verify 'get' handling of json error status
         '''
         data = self.client.get('incident', 'sysparm_action=dummy')
-        self.assertEquals(data, None)
+        self.assertEqual(data, None)
 
     def test_03_get_json_no_record(self):
         ''' Verify 'get' handling of no record in json
         '''
         data = self.client.get('incident', 'sysparm_action=get')
-        self.assertEquals(data, None)
+        self.assertEqual(data, None)
 
     def test_04_post_no_payload(self):
         ''' Verify 'post' error handling when no payload provided
@@ -109,7 +109,7 @@ class TestSnowClient(unittest.TestCase):
         payload = None
         resp = self.client.post('incident', 'sysparm_action=insert',
                                 payload)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_05_post_302(self):
         ''' Verify 'post' error handling of HTTP status 302
@@ -120,7 +120,7 @@ class TestSnowClient(unittest.TestCase):
                             api='')
 
         resp = client.post('incident', 'sysparm_action=insert', DATA)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_06_post_json_ret_error(self):
         ''' Verify 'post' error handling of json return status
@@ -128,7 +128,7 @@ class TestSnowClient(unittest.TestCase):
         payload = {}
         resp = self.client.post('incident', 'sysparm_action=dummy',
                                 payload)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
 if __name__ == '__main__':
     unittest.main()

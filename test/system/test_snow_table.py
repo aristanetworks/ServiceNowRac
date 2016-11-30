@@ -82,21 +82,21 @@ class TestSnowTable(unittest.TestCase):
         global sys_id
 
         resp = self.table.insert(DATA)[0]
-        self.assertEquals(resp['short_description'], DATA['short_description'])
+        self.assertEqual(resp['short_description'], DATA['short_description'])
         sys_id = resp['sys_id']
 
     def test_01_get(self):
         ''' Test 'get'' functionality using sysid of previous insert
         '''
         resp = self.table.get(sys_id)
-        self.assertEquals(resp['sys_id'], sys_id)
+        self.assertEqual(resp['sys_id'], sys_id)
 
     def test_02_get_bad_return(self):
         ''' Verify NoneType returned on 'get' using invalid sysid
         '''
         sysid = '00112233445566778899abcdefdeadfe'
         data = self.table.get(sysid)
-        self.assertEquals(data, None)
+        self.assertEqual(data, None)
 
     def test_03_get_keys(self):
         ''' Verify 'get_keys' functionality.
@@ -121,15 +121,15 @@ class TestSnowTable(unittest.TestCase):
 
         query = 'sys_id=%s' % sys_id
         resp = self.table.update(data, query)[0]
-        self.assertEquals(resp['short_description'], description)
+        self.assertEqual(resp['short_description'], description)
 
     def test_06_delete(self):
         ''' Verify 'delete' functionality using sysid from previous insert
         '''
         data = self.table.delete(sys_id)[0]
-        self.assertEquals(data['sys_id'], sys_id)
+        self.assertEqual(data['sys_id'], sys_id)
         resp = self.table.get(sys_id)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_08_insert_delete_multiple(self):
         ''' Verify 'insert_multiple' and 'delete_multiple' functionality
@@ -141,11 +141,11 @@ class TestSnowTable(unittest.TestCase):
             data.append({'short_description': description})
 
         resp = self.table.insert_multiple(data)
-        self.assertEquals(len(resp), create_num)
+        self.assertEqual(len(resp), create_num)
 
         query_str = 'short_descriptionSTARTSWITHSystest Generated:'
         resp = self.table.delete_multiple(query_str)
-        self.assertEquals(resp[0]['count'], create_num)
+        self.assertEqual(resp[0]['count'], create_num)
 
 if __name__ == '__main__':
     unittest.main()

@@ -61,7 +61,7 @@ class TestSnowTable(unittest.TestCase):
             sysid = '9c573169c611228700193229fff72400'
             data = self.table.get(sysid)
 
-        self.assertEquals(data['sys_id'], '9c573169c611228700193229fff72400')
+        self.assertEqual(data['sys_id'], '9c573169c611228700193229fff72400')
 
     def test_01_get_http_404_error(self):
         ''' Test 'get' with 404 return
@@ -77,7 +77,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(snow_empty_record_list):
             resp = self.table.get(sysid)
 
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_03_get_keys(self):
         ''' Verify 'get_keys' functionality
@@ -85,7 +85,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(snow_table_getkeys):
             data = self.table.get_keys('name=Arista Networks')
 
-        self.assertEquals(len(data), 50)
+        self.assertEqual(len(data), 50)
 
     def test_04_get_records(self):
         ''' Verify 'get_records' functionality
@@ -93,7 +93,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(snow_table_getrecords):
             data = self.table.get_records('name=Arista Networks')
 
-        self.assertEquals(len(data), 52)
+        self.assertEqual(len(data), 52)
 
     def test_05_insert(self):
         ''' Verify 'insert' functionality
@@ -109,7 +109,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(snow_table_insert):
             resp = self.table.insert(data)[0]
 
-        self.assertEquals(resp['short_description'], 'Test generate Incident')
+        self.assertEqual(resp['short_description'], 'Test generate Incident')
 
     def test_06_insert_invalid_type(self):
         ''' Verify 'insert_multiple' fails on non-list arg
@@ -131,7 +131,7 @@ class TestSnowTable(unittest.TestCase):
 
         with HTTMock(snow_table_insert_multiple):
             resp = self.table.insert_multiple(data)
-        self.assertEquals(len(resp), 5)
+        self.assertEqual(len(resp), 5)
 
     def test_08_update(self):
         ''' Verify 'update' functionality
@@ -145,7 +145,7 @@ class TestSnowTable(unittest.TestCase):
         with HTTMock(snow_table_update):
             resp = self.table.update(data, query)[0]
 
-        self.assertEquals(resp['comments'], '')
+        self.assertEqual(resp['comments'], '')
 
     def test_09_delete(self):
         ''' Verify 'delete' functionality
@@ -154,7 +154,7 @@ class TestSnowTable(unittest.TestCase):
             sysid = 'aad67f9613b22200a57c70a76144b0ee'
             data = self.table.delete(sysid)[0]
 
-        self.assertEquals(data['sys_id'], 'aad67f9613b22200a57c70a76144b0ee')
+        self.assertEqual(data['sys_id'], 'aad67f9613b22200a57c70a76144b0ee')
 
     def test_10_delete_multiple(self):
         ''' Verify 'delete_multiple' functionality
@@ -163,7 +163,7 @@ class TestSnowTable(unittest.TestCase):
             resp = self.table.delete_multiple(
                 'short_descriptionSTARTSWITHSystest Generated')
 
-        self.assertEquals(resp[0]['count'], 5)
+        self.assertEqual(resp[0]['count'], 5)
 
 if __name__ == '__main__':
     unittest.main()

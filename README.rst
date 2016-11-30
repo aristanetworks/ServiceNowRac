@@ -1,5 +1,5 @@
-Arista ServiceNow REST API Client |Build Status| |codecov|
-==========================================================
+Arista ServiceNow REST API Client |pypiver| |Build Status| |codecov|
+====================================================================
 
 Table of Contents
 -----------------
@@ -156,4 +156,5 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    :target: https://travis-ci.org/aristanetworks/ServiceNowRac
 .. |codecov| image:: https://codecov.io/gh/aristanetworks/ServiceNowRac/branch/develop/graph/badge.svg
    :target: https://codecov.io/gh/aristanetworks/ServiceNowRac
-
+.. |pypiver| image:: https://badge.fury.io/py/ServiceNowRac.svg
+   :target: https://badge.fury.io/py/ServiceNowRac

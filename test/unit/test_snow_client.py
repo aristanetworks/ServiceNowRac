@@ -72,7 +72,7 @@ class TestSnowClient(unittest.TestCase):
         '''
         with HTTMock(snow_table_getkeys):
             resp = self.client.get('incident', 'sysparm_action=getKeys')
-        self.assertEquals(len(resp), 50)
+        self.assertEqual(len(resp), 50)
 
     def test_01_get_302(self):
         ''' Verify 'get' handling of HTTP302 with retry
@@ -111,21 +111,21 @@ class TestSnowClient(unittest.TestCase):
         '''
         with HTTMock(snow_invalid_sysparm_action):
             resp = self.client.get('incident', 'sysparm_action=dummy')
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_06_get_json_no_record(self):
         ''' Verify 'get' handling of json with no record
         '''
         with HTTMock(snow_request_json_no_record):
             resp = self.client.get('incident', 'sysparm_action=get')
-        self.assertEquals(resp, {u'status': u'pass'})
+        self.assertEqual(resp, {u'status': u'pass'})
 
     def test_07_get_bad_json(self):
         ''' Verify 'get' handling of json with no record
         '''
         with HTTMock(snow_bad_json_return):
             resp = self.client.get('incident', 'sysparm_action=get')
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_08_get_timeout(self):
         ''' Verify 'get' handling of Timeout
@@ -148,7 +148,7 @@ class TestSnowClient(unittest.TestCase):
         '''
         with HTTMock(snow_post_json_valid):
             resp = self.client.post('incident', 'sysparm_action=insert', DATA)
-        self.assertNotEquals(resp, None)
+        self.assertNotEqual(resp, None)
 
     def test_11_post_no_payload(self):
         ''' Verify 'post' handling of no payload returns NoneType
@@ -157,7 +157,7 @@ class TestSnowClient(unittest.TestCase):
         with HTTMock(snow_post_json_no_payload):
             resp = self.client.post('incident', 'sysparm_action=insert',
                                     payload)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_12_post_302(self):
         ''' Verify 'post' handing of HTTP302
@@ -185,7 +185,7 @@ class TestSnowClient(unittest.TestCase):
         with HTTMock(snow_invalid_sysparm_action):
             resp = self.client.post('incident', 'sysparm_action=dummy',
                                     payload)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_15_post_bad_json(self):
         ''' Verify 'get' handling of json with no record
@@ -196,7 +196,7 @@ class TestSnowClient(unittest.TestCase):
         }
         with HTTMock(snow_bad_json_return):
             resp = self.client.post('incident', 'sysparm_action=insert', data)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_16_post_record_error(self):
         ''' Verify 'post' handling of record with __error returns NoneType
@@ -205,7 +205,7 @@ class TestSnowClient(unittest.TestCase):
         with HTTMock(snow_invalid_insert):
             resp = self.client.post('incident', 'sysparm_action=insert',
                                     payload)
-        self.assertEquals(resp, None)
+        self.assertEqual(resp, None)
 
     def test_17_post_timeout(self):
         ''' Verify 'post' handling of Timeout

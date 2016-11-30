@@ -18,7 +18,9 @@ Table of Contents
    -  `Unit Test`_
    -  `System Test`_
 
-5. `License`_
+5. `Coverage`_
+
+6. `License`_
 
 Overview
 ========
@@ -26,11 +28,11 @@ Overview
 The ServiceNowRac package provides a python REST API client for communicating
 with a ServiceNow instance. The package contains the following classes:
 
-* SnowClient - This class is used to create a persistent client connection to a
+- SnowClient - This class is used to create a persistent client connection to a
   ServiceNow instance.  It provides the underlying reliable connection and
   defines the get and post methods for interacting with ServiceNow REST API.
 
-* SnowTable - Use this class to perform operations on existing tables. Provides
+- SnowTable - Use this class to perform operations on existing tables. Provides
   the API calls for table operations.
 
 Requirements
@@ -119,6 +121,15 @@ instance/login. Once updated, system tests can be run by issuing:
 
     $ make systest
 
+Coverage
+========
+
+Contributions should maintain at the minimum +90% code coverage. You can check
+this locally before submitting your Pull Request.
+
+- Run ``make unittest``
+- Run ``make coverage_report`` to confirm code coverage.
+
 License
 =======
 
@@ -127,11 +138,16 @@ Copyright |copy| 2016, Arista Networks, Inc. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+- Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
 
-- Neither the name of Arista Networks nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+- Neither the name of Arista Networks nor the names of its contributors may be
+  used to endorse or promote products derived from this software without
+  specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED

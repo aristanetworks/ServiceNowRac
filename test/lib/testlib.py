@@ -1,5 +1,4 @@
-#
-# Copyright (c) 2015, Arista Networks, Inc.
+# Copyright (c) 2016, Arista Networks, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -18,7 +17,7 @@
 #   this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ARISTA NETWORKS
 # BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
@@ -28,8 +27,37 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-''' ServiceNow RESTful API Client
+
+''' Test lib
 '''
-__version__ = '0.5.0'
-__author__ = 'Arista Networks, Inc.'
+import os
+import random
+import string
+import json
+
+def get_fixtures_path():
+    ''' Return the path to the fixtures directory.
+    '''
+    return os.path.join(os.path.dirname(__file__), '../fixtures')
+
+def get_fixture(filename):
+    ''' Return a path with the fixtures directory prepended to the filename.
+    '''
+    return os.path.join(get_fixtures_path(), filename)
+
+def get_fixture_data(filename):
+    ''' Returns fixture data
+    '''
+    # Return contents of fixture file
+    content_json = None
+    with open(get_fixture(filename)) as json_file:
+        content_json = json.load(json_file)
+        json_file.close()
+
+    return content_json
+
+def random_string(minchar=1, maxchar=50):
+    ''' Create and return a random string
+    '''
+    return ''.join(random.choice(string.ascii_uppercase + string.digits)
+                   for _ in range(random.randint(minchar, maxchar)))

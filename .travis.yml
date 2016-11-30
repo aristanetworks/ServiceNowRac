@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - 2.7
+
+install:
+  - pip install -r dev-requirements.txt
+  - pip install codecov
+
+script:
+  - make clean
+  - make check
+  - make pep8
+  - make pyflakes
+  - make pylint
+  - make unittest
+  - make coverage_report
+
+notifications:
+  email:
+    - cwomble@arista.com
+
+after_success:
+  codecov

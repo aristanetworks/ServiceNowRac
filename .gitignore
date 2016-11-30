@@ -43,6 +43,9 @@ coverage.xml
 .project
 .pydevproject
 
+# vim
+*.swp
+
 # Rope
 .ropeproject
 

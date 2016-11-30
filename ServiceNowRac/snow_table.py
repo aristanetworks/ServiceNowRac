@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2015, Arista Networks, Inc.
+# Copyright (c) 2016, Arista Networks, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,9 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+''' ServiceNow Table API
+    Class containing ServiceNow Table API calls
+'''
 
 class SnowTable(object):
     ''' Use this class to perform operations on existing tables.
@@ -74,12 +77,16 @@ class SnowTable(object):
         return self.conn.post(self.table, sysparm, data)
 
     def insert_multiple(self, data):
-        ''' Create multiple new records.
+        ''' Create multiple new records. Format of payload should model
+            { "records" : [ { ... }, { ... } ] }
         '''
-        # XXX This won't work. Need:
-        # { "records" : [ { ... }, { ... } ] }
+        if not isinstance(data, list):
+            raise TypeError('Invalid type. insert_multiple requires list of '
+                            'records.')
+
         sysparm = 'sysparm_action=insertMultiple'
-        return self.conn.post(self.table, sysparm, data)
+        records = {'records': data}
+        return self.conn.post(self.table, sysparm, records)
 
     def update(self, data, query):
         ''' Update existing records filtered by the encoded query string.

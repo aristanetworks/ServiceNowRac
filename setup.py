@@ -54,7 +54,6 @@ def get_long_description():
     ''' Get the long description from README.rst if it exists.
     '''
     long_description = ''
-    # Get the long description from the README file
     here = path.abspath(path.dirname(__file__))
     try:
         with io.open(path.join(here, 'README.rst'), encoding='utf-8') as file_hdl:
@@ -107,14 +106,13 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['requests'],
+    install_requires=['requests>=1.0.0'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['check-manifest', 'pep8', 'pyflakes', 'pylint'],
-        'test': ['coverage', 'httmock'],
+        'dev': ['check-manifest', 'pep8', 'pyflakes', 'pylint', 'coverage', 'httmock'],
     },
 )

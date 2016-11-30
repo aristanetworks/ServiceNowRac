@@ -35,7 +35,7 @@ import unittest
 
 from ServiceNowRac.snow_client import SnowClient
 
-from .config import CONFIG
+from test.system.config import CONFIG
 
 
 DATA = {

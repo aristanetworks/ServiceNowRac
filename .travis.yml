@@ -18,7 +18,7 @@ script:
 
 notifications:
   email:
-    - cwomble@arista.com
+    - eosplus-dev@arista.com
 
 after_success:
   codecov

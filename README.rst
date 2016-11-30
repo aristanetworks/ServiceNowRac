@@ -152,7 +152,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .. _Example: #example
 .. _Testing: #testing
 
-.. |Build Status| image:: https://travis-ci.com/aristanetworks/ServiceNowRac.svg?token=5Krshfo4QsdTX49aLCPD&branch=develop
+.. |Build Status| image:: https://travis-ci.com/aristanetworks/ServiceNowRac.svg?branch=develop
    :target: https://travis-ci.com/aristanetworks/ServiceNowRac
-.. |codecov| image:: https://codecov.io/gh/aristanetworks/ServiceNowRac/branch/develop/graph/badge.svg?token=YpbBXLe919
+.. |codecov| image:: https://codecov.io/gh/aristanetworks/ServiceNowRac/branch/develop/graph/badge.svg
    :target: https://codecov.io/gh/aristanetworks/ServiceNowRac
+
